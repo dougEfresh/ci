@@ -67,15 +67,15 @@ jobs:
         env:
           ASAN_OPTIONS: "detect_odr_violation=0:detect_leaks=0"
           RUSTFLAGS: "-Z sanitizer=address"
-          RPC_URL: ${{ inputs.fireblocks && secrets.RPC_URL }}
-          FIREBLOCKS_API_KEY: ${{ inputs.fireblocks && secrets.FIREBLOCKS_API_KEY }}
-          FIREBLOCKS_SECRET: ${{ inputs.fireblocks && secrets.FIREBLOCKS_SECRET }}
-          FIREBLOCKS_ENDPOINT: ${{ inputs.fireblocks && vars.FIREBLOCKS_ENDPOINT }}
+          RPC_URL: ${{ inputs.fireblocks && secrets.RPC_URL || '' }}
+          FIREBLOCKS_API_KEY: ${{ inputs.fireblocks && secrets.FIREBLOCKS_API_KEY || '' }}
+          FIREBLOCKS_SECRET: ${{ inputs.fireblocks && secrets.FIREBLOCKS_SECRET || '' }}
+          FIREBLOCKS_ENDPOINT: ${{ inputs.fireblocks && vars.FIREBLOCKS_ENDPOINT || '' }}
           FIREBLOCKS_POLL_TIMEOUT: "90"
           FIREBLOCKS_POLL_INTERVAL: "5"
           FIREBLOCKS_DEVNET: "true"
           FIREBLOCKS_VAULT: "0"
-          TEST_PRIVATE_KEY: ${{ inputs.fireblocks && secrets.TEST_PRIVATE_KEY }}
+          TEST_PRIVATE_KEY: ${{ inputs.fireblocks && secrets.TEST_PRIVATE_KEY || '' }}
       - name: cargo test -Zsanitizer=leak
         if: always()
         run: cargo test --target x86_64-unknown-linux-gnu  -- --no-capture ${{ inputs.args }}
@@ -83,10 +83,10 @@ jobs:
           LSAN_OPTIONS: "suppressions=lsan-suppressions.txt"
           RUSTFLAGS: "-Z sanitizer=leak"
           RUST_LOG: "${{ inputs.rustlog }}"
-          RPC_URL: ${{ inputs.fireblocks && secrets.RPC_URL }}
-          FIREBLOCKS_API_KEY: ${{ inputs.fireblocks && secrets.FIREBLOCKS_API_KEY }}
-          FIREBLOCKS_SECRET: ${{ inputs.fireblocks && secrets.FIREBLOCKS_SECRET }}
-          FIREBLOCKS_ENDPOINT: ${{ inputs.fireblocks && vars.FIREBLOCKS_ENDPOINT }}
+          RPC_URL: ${{ inputs.fireblocks && secrets.RPC_URL || '' }}
+          FIREBLOCKS_API_KEY: ${{ inputs.fireblocks && secrets.FIREBLOCKS_API_KEY || '' }}
+          FIREBLOCKS_SECRET: ${{ inputs.fireblocks && secrets.FIREBLOCKS_SECRET || '' }}
+          FIREBLOCKS_ENDPOINT: ${{ inputs.fireblocks && vars.FIREBLOCKS_ENDPOINT || '' }}
           FIREBLOCKS_POLL_TIMEOUT: "90"
           FIREBLOCKS_POLL_INTERVAL: "5"
           FIREBLOCKS_DEVNET: "true"

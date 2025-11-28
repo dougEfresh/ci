@@ -73,16 +73,15 @@ jobs:
             cargo llvm-cov --locked --features "${{ matrix.features }}" --lcov --output-path lcov-${{ matrix.features }}.info --no-fail-fast -- --no-capture ${{ inputs.args }}
           fi
         env:
-          RUST_LOG: "${{ inputs.rustlog }}"
           RPC_URL: ${{ inputs.fireblocks && secrets.RPC_URL }}
-          FIREBLOCKS_API_KEY: ${{ inputs.fireblocks && secrets.FIREBLOCKS_API_KEY }}
-          FIREBLOCKS_SECRET: ${{ inputs.fireblocks && secrets.FIREBLOCKS_SECRET }}
-          FIREBLOCKS_ENDPOINT: ${{ inputs.fireblocks && vars.FIREBLOCKS_ENDPOINT }}
+          FIREBLOCKS_API_KEY: ${{ inputs.fireblocks && secrets.FIREBLOCKS_API_KEY || '' }}
+          FIREBLOCKS_SECRET: ${{ inputs.fireblocks && secrets.FIREBLOCKS_SECRET || '' }}
+          FIREBLOCKS_ENDPOINT: ${{ inputs.fireblocks && vars.FIREBLOCKS_ENDPOINT || '' }}
           FIREBLOCKS_POLL_TIMEOUT: "90"
           FIREBLOCKS_POLL_INTERVAL: "5"
           FIREBLOCKS_DEVNET: "true"
           FIREBLOCKS_VAULT: "0"
-          TEST_PRIVATE_KEY: ${{ inputs.fireblocks && secrets.TEST_PRIVATE_KEY }}
+          TEST_PRIVATE_KEY: ${{ inputs.fireblocks && secrets.TEST_PRIVATE_KEY || '' }}
       - name: Record Rust version
         run: echo "RUST=$(rustc --version)" >> "$GITHUB_ENV"
       - name: Upload to codecov.io
