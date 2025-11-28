@@ -35,10 +35,12 @@ runs:
       with:
         components: "clippy"
     - name: Debug versions
+      shell: bash
       run: |
         cargo +${{steps.toolchain-stable.outputs.name}} --version
         cargo +${{steps.toolchain-nightly.outputs.name}} --version
     - name: Install docsrs
       if: ${{ inputs.docsrs == 'true' }}
+      shell: bash
       run: |
         cargo +${{steps.toolchain-nightly.outputs.name}} install cargo-docs-rs
