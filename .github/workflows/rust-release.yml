@@ -1,0 +1,48 @@
+name: Release
+on:
+  workflow_call:
+    inputs:
+      ubuntu_packages:
+        type: string
+        required: false
+        default: "nothing"
+      runner:
+        type: string
+        default: ${{ vars.RUNNER }}
+        required: false
+      version:
+        type: string
+        required: true
+      package:
+        type: string
+        default: "default"
+        required: false
+
+jobs:
+  release:
+    runs-on: ${{ inputs.runner }}
+    permissions:
+      contents: write
+    steps:
+      - name: Init
+        uses: carteramesh/ci/.github/actions/rust-init@main
+        with:
+          ubuntu_packages: ${{ inputs.ubuntu_packages }}
+      - name: Install cargo-release
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-release
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Release
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [[ "${{ inputs.package }}" == "default" ]]; then
+            cargo release --execute --no-confirm ${{ inputs.version }}
+          else
+            cargo release --package ${{ inputs.package }} --execute --no-confirm ${{ inputs.version }}
+          fi
