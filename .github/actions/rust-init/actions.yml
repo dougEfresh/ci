@@ -1,0 +1,44 @@
+name: Rust Init
+description: Initialize a Rust project with a basic structure and dependencies.
+inputs:
+  git_token:
+    description: "Token to authenticate for git"
+    required: false
+  docsrs:
+    description: "Install cargo-docs-rs"
+    default: "true"
+    required: false
+  components:
+    description: "Components to install"
+    default: "rustfmt,clippy"
+    required: false
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v6
+      with:
+        token: ${{ inputs.git_token || github.token }}
+    - name: cache
+      uses: ubicloud/rust-cache@v2
+      with:
+        cache-on-failure: "true"
+    - name: Install nightyly
+      id: toolchain-nightly
+      uses: dtolnay/rust-toolchain@nightly
+      with:
+        components: "rustfmt"
+    - name: Install stable
+      id: toolchain-stable
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        components: "clippy"
+    - name: Debug versions
+      run: |
+        cargo +${{steps.toolchain-stable.outputs.name}} --version
+        cargo +${{steps.toolchain-nightly.outputs.name}} --version
+    - name: Install docsrs
+      if: ${{ inputs.docsrs == 'true' }}
+      run: |
+        cargo +${{steps.toolchain-nightly.outputs.name}} install cargo-docs-rs
