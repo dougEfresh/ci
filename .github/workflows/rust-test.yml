@@ -69,15 +69,15 @@ jobs:
         run: |
           echo "ACTION_PATH=$GITHUB_ACTION_PATH"
           if [ "${{ inputs.fireblocks }}" == "true" ]; then
-            export RPC_URL=${{ secrets.RPC_URL }}
-            export FIREBLOCKS_API_KEY=${{ secrets.FIREBLOCKS_API_KEY || '' }}
-            export FIREBLOCKS_SECRET=${{ secrets.FIREBLOCKS_SECRET || '' }}
-            export FIREBLOCKS_ENDPOINT=${{ vars.FIREBLOCKS_ENDPOINT || '' }}
+            export RPC_URL="${{ secrets.RPC_URL }}"
+            export FIREBLOCKS_API_KEY="${{ secrets.FIREBLOCKS_API_KEY || '' }}"
+            export FIREBLOCKS_SECRET="${{ secrets.FIREBLOCKS_SECRET || '' }}"
+            export FIREBLOCKS_ENDPOINT="${{ vars.FIREBLOCKS_ENDPOINT || '' }}"
             export FIREBLOCKS_POLL_TIMEOUT="90"
             export FIREBLOCKS_POLL_INTERVAL="5"
             export FIREBLOCKS_DEVNET="true"
-            export FIREBLOCKS_VAULT="0"
-            export TEST_PRIVATE_KEY=${{ secrets.TEST_PRIVATE_KEY || '' }}
+            export FIREBLOCKS_VAULT="${{ vars.FIREBLOCKS_VAULT || '' }}"
+            export TEST_PRIVATE_KEY="${{ secrets.TEST_PRIVATE_KEY || '' }}"
           fi
           if [ "${{ matrix.features }}" == "default" ]; then
             cargo llvm-cov --locked --lcov --output-path lcov-${{ matrix.features }}.info --no-fail-fast -- --no-capture ${{ inputs.args }}
