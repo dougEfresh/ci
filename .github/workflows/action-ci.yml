@@ -70,8 +70,8 @@ jobs:
         shell: bash
         run: |
           yq eval-all '. as $item ireduce ({}; . * $item)' \
-            .github/cl-configs/rust-default.yaml \
-            .github/ci-configs/test/*.yaml \
+            .github/ci-configs/rust-default.yml \
+            .github/ci-configs/test/*.yml \
             -o json > merged.json
       - name: Test Local Action
         id: test-action

@@ -7,7 +7,8 @@
  */
 import { jest } from '@jest/globals';
 import * as core from '../__fixtures__/core.js';
-
+import * as fs from 'fs';
+import * as yaml from 'js-yaml';
 // Mocks should be declared before the module being tested is imported.
 jest.unstable_mockModule('@actions/core', () => core);
 
@@ -17,8 +18,10 @@ const { run } = await import('../src/main.js');
 
 describe('main.ts', () => {
   beforeEach(() => {
+    const raw = fs.readFileSync('.github/ci-configs/rust-default.yml', 'utf8');
+    const config = yaml.load(raw, { json: true });
     // Set the action's inputs as return values from core.getInput().
-    core.getInput.mockImplementation(() => '500');
+    core.getInput.mockImplementation(() => JSON.stringify(config));
   });
 
   afterEach(() => {
@@ -27,6 +30,6 @@ describe('main.ts', () => {
 
   it('Sets the time output', async () => {
     await run();
-    expect(core.setOutput).toHaveBeenCalled();
+    expect(core.setOutput).toHaveBeenNthCalledWith(1, 'config', expect.stringMatching(/^{/));
   });
 });
