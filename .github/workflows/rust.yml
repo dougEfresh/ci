@@ -24,6 +24,7 @@ jobs:
         uses: carteramesh/ci/.github/actions/rust-config@main
         with:
           token: ${{ github.token }}
+          runner: ${{ inputs.runner }}
 
   coverage:
     runs-on: ${{ matrix.os }}

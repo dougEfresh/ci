@@ -44,4 +44,4 @@ runs:
       uses: carteramesh/ci@main
       with:
         config: merged.json
-        runner: ${{ inputs.runner || vars.RUNNER }}
+        runner: ${{ inputs.runner }}
