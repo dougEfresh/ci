@@ -78,10 +78,19 @@ jobs:
         uses: ./
         with:
           config: merged.json
+          runner: ${{ vars.RUNNER }}
 
       - name: Print Output
         id: output
         run: |
           echo '${{ steps.test-action.outputs.config }}' | jq .
           runner="${{ fromJSON(steps.test-action.outputs.config).runner }}"
-          echo $runner
+          rustlog="${{ fromJSON(steps.test-action.outputs.config).global.rustlog }}"
+          if [ "$runner" != "${{ vars.RUNNER }}" ]; then
+            echo "Runner mismatch ${runner} != ${{ vars.RUNNER }}"
+            exit 1
+          fi
+          if [ "$rustlog" != "debug" ]; then
+            echo "Rust log level mismatch ${rustlog} != debug"
+            exit 1
+          fi

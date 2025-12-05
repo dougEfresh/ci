@@ -12,8 +12,8 @@ inputs:
     description: file path or JSON string
     required: true
   runner:
-    description: runner name
-    required: true
+    description: github runner name
+    required: false
 
 # Define your outputs here.
 outputs:
