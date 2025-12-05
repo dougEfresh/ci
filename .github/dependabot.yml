@@ -1,31 +1,26 @@
 version: 2
 updates:
-  - package-ecosystem: "cargo"
-    # Look for `Cargo.toml` and `Cargo.lock` in the root directory
-    directory: "/"
-    # Check for updates every Monday
+  - package-ecosystem: github-actions
+    directory: /
     schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
-    ignore:
-      - dependency-name: "*"
+      interval: weekly
+    groups:
+      actions-minor:
         update-types:
-          - "version-update:semver-patch"
-          - "version-update:semver-minor"
-      - dependency-name: "bincode"
-      - dependency-name: "spl*"
-        update-types:
-          - "version-update:semver-patch"
-          - "version-update:semver-minor"
-          - "version-update:semver-major"
-      - dependency-name: "solana*"
-        update-types:
-          - "version-update:semver-patch"
-          - "version-update:semver-minor"
-          - "version-update:semver-major"
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    # Check for updates every Monday
+          - minor
+          - patch
+
+  - package-ecosystem: npm
+    directory: /
     schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 10
+      interval: weekly
+    groups:
+      npm-development:
+        dependency-type: development
+        update-types:
+          - minor
+          - patch
+      npm-production:
+        dependency-type: production
+        update-types:
+          - patch
