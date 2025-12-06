@@ -36,7 +36,7 @@ runs:
       run: |
         env | grep GITHUB | sort
         yq eval-all '. as $item ireduce ({}; . * $item)' \
-          ${GITHUB_ACTION_PATH}/.github/ci-configs/rust-default.yml \
+          ${GITHUB_ACTION_PATH}/../../ci-configs/rust-default.yml \
           .github/ci-configs/*.yml \
           -o json > merged.json
     - name: merge
