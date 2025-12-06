@@ -113,7 +113,8 @@ jobs:
 
   semver:
     needs: [config]
-    runs-on: ${{ fromJSON(needs.config.outputs.config).runner }}
+    runs-on: ${{ vars.RUNNER_AMD64 }}
+    #    runs-on: ${{ fromJSON(needs.config.outputs.config).runner }}
     name: semver
     if: ${{ fromJSON(needs.config.outputs.config).jobs.semver.if }}
     steps:
@@ -223,6 +224,8 @@ jobs:
 
       - name: Enable debug symbols
         run: |
+          #rustup target add x86_64-unknown-linux-gnu
+          echo _rust_target=aarch64-unknown-linux-gnu >> $GITHUB_ENV
           rustup default nightly
           # to get the symbolizer for debug symbol resolution
           sudo apt install llvm
@@ -242,19 +245,19 @@ jobs:
         if: ${{ fromJSON(needs.config.outputs.config).jobs.sanitizers.address.if }}
         # only --lib --tests b/c of https://github.com/rust-lang/rust/issues/53945
         run: |
-          cargo test --lib --tests --no-fail-fast --target x86_64-unknown-linux-gnu -- --no-capture
+          cargo test --lib --tests --no-fail-fast --target ${_rust_target} -- --no-capture
         env:
           ASAN_OPTIONS: 'detect_odr_violation=0:detect_leaks=0'
           RUSTFLAGS: '-Z sanitizer=address'
       - name: cargo test -Zsanitizer=leak
         if: ${{ fromJSON(needs.config.outputs.config).jobs.sanitizers.leak.if }}
         run: |
-          cargo test --target x86_64-unknown-linux-gnu  -- --no-capture
+          cargo test --target ${_rust_target}  -- --no-capture
         env:
           LSAN_OPTIONS: 'suppressions=lsan-suppressions.txt'
           RUSTFLAGS: '-Z sanitizer=leak'
       - name: cargo test -Zsanitizer=thread
         if: ${{ fromJSON(needs.config.outputs.config).jobs.sanitizers.thread.if }}
-        run: cargo test --target x86_64-unknown-linux-gnu -- --test-threads=1 --no-capture
+        run: cargo test --target ${_rust_target} -- --test-threads=1 --no-capture
         env:
           RUSTFLAGS: '-Z sanitizer=thread'
