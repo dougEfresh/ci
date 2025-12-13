@@ -30,7 +30,7 @@ runs:
         fi
     - name: Setup yq
       if: steps.check-yq.outputs.exists == 'false'
-      uses: mikefarah/yq@v4
+      uses: carteramesh/ci/.github/actions/install-yq@main
     - name: Merge YAML configs
       shell: bash
       run: |
