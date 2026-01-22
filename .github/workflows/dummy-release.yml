@@ -23,10 +23,10 @@ on:
         required: false
 jobs:
   releaser:
+    if: true
     name: release
     uses: ./.github/workflows/rust-release.yml
     secrets: inherit
     with:
-      runner: ${{ vars.RUNNER }}
       version: ${{ inputs.version }}
       package: 'dummy'

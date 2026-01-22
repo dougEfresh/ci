@@ -1,25 +1,25 @@
 name: ci-config
 description: config ci config
 author: Cartera Mesh
-
 branding:
   icon: scissors
   color: black
-
-# Define your inputs here.
-inputs:
-  config:
-    description: file path or JSON string
-    required: true
-  runner:
-    description: github runner name
-    required: false
-
-# Define your outputs here.
 outputs:
   config:
     description: JSON string of the config
-
+    value: ${{ steps.generate.outputs.config }}
 runs:
-  using: node24
-  main: dist/index.js
+  using: composite
+  steps:
+    - name: setup bun
+      uses: oven-sh/setup-bun@v2
+    - id: generate
+      name: generate
+      shell: bash
+      run: |
+        if [ ! -f .github/rust-ci.ts ]; then
+          echo "::error::Missing .github/rust-ci.ts config file"
+          exit 1
+        fi
+        CONFIG="$(bun run ${{ github.action_path }}/scripts/generate-rust.ts | jq . --compact-output )"
+        echo "config=$CONFIG" >> $GITHUB_OUTPUT
