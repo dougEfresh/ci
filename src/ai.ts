@@ -14,6 +14,7 @@ Provide detailed feedback using inline comments for ONLY issues, no praise inlin
 Use top-level comments for general observations or praise
 Do not be shy, I am a big boy and can handle criticism gracefully. I welcome feedback and suggestions.
 
+
 ## Rust tooling
 
 You should have access to cargo cli. You can use this to verify the build yourself, or use it to run tests (or a specific test)
@@ -25,6 +26,7 @@ If you encounter an error running cargo, please comment on this PR. If you desir
 If you are denied access to a tool, shell command, or github API resource (via gh cli) then notify the pull request author that you would like access to that tool.
 As an example, we use CodeCov to our test coverage, if you like to have access to historical data, we can provide you with the CodeCov CLI tool and access.
 In general, if you need something, just ask.
+
 
 Review this PR against our team checklist:
 
