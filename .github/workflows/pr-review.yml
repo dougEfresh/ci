@@ -48,7 +48,7 @@ jobs:
           # description: "Use just one comment to deliver issue/PR comments"
           # required: false
           # default: "false"
-          track_progress: "${{ fromJSON(needs.config.outputs.config).ai.track_progress }"
+          track_progress: "${{ fromJSON(needs.config.outputs.config).ai.track_progress }}"
           #            description: "Force tag mode with tracking comments for pull_request and issue events. Only applicable to pull_request (opened, synchronize, ready_for_review, reopened) and issue (opened, edited, labeled, assigned) events."
           path_to_claude_code_executable: ''
           #           description: "Optional path to a custom Claude Code executable. If provided, skips automatic installation and uses this executable instead. WARNING: Using an older version may cause problems if the action begins taking advantage of new Claude Code features. This input is typically not needed unless you're debugging something specific or have unique needs in your environment."
