@@ -1,3 +1,5 @@
+import { type AiJob, PROMPT } from './ai.js';
+
 export enum Arch {
   ARM64 = 'vars.RUNNER_ARM64',
   AMD64 = 'vars.RUNNER_AMD64',
@@ -165,6 +167,7 @@ export class RustWorkflow {
   private jobs: RustJobs;
   private global: Global;
   private release: Release;
+  private ai: AiJob;
 
   constructor() {
     this.jobs = {
@@ -186,6 +189,15 @@ export class RustWorkflow {
       debian: false,
       profile: 'release',
       os: [Arch.AMD64],
+    };
+    this.ai = {
+      prompt: PROMPT,
+      additional: '',
+      enabled: true,
+      track_progress: true,
+      allowed_bots: '*',
+      claude_args: '',
+      use_sticky_comment: false,
     };
   }
 
@@ -219,6 +231,16 @@ export class RustWorkflow {
     return this;
   }
 
+  disableSanitizers() {
+    this.jobs.sanitizers.enabled = false;
+    return this;
+  }
+
+  disableAi() {
+    this.ai.enabled = false;
+    return this;
+  }
+
   build() {
     //   os:
     //     - target: aarch64-unknown-linux-gnu
@@ -230,6 +252,7 @@ export class RustWorkflow {
     // #    - target: x86_64-pc-windows-msvc
     // #      os: windows-latest
     return {
+      ai: this.ai,
       release: {
         publish: this.release.publish,
         debian: this.release.debian,
