@@ -21,6 +21,8 @@ runs:
           echo "::error::Missing .github/rust-ci.ts config file"
           exit 1
         fi
-        export NODE_PATH=${{ github.action_path }}
-        CONFIG="$(bun run ${{ github.action_path }}/scripts/generate-rust.ts | jq . --compact-output )"
+        cp -v .github/rust-ci.ts ${{ github.action_path }}
+        cd ${{ github.action_path }}
+        ls -l
+        CONFIG="$(bun run ./scripts/generate-rust.ts | jq . --compact-output )"
         echo "config=$CONFIG" >> $GITHUB_OUTPUT
