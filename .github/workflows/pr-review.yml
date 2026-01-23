@@ -7,7 +7,22 @@ permissions:
   pull-requests: write
   id-token: write
 jobs:
+
+  config:
+    runs-on: ${{ inputs.runner || vars.RUNNER }}
+    name: generate config
+    outputs:
+      config: ${{ steps.config.outputs.config }}
+    steps:
+      - name: config
+        id: config
+        uses: dougefresh/ci/.github/actions/rust-config@main
+        with:
+          arm64: ${{ vars.RUNNER_ARM64 }}
+          amd64: ${{ vars.RUNNER_AMD64 }}
+          git_token: ${{ github.token }}
   jobtaker:
+    needs:  [config]
     if: |
       (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@jobtaker')) ||
       (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@jobtaker')) ||
