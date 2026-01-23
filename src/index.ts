@@ -242,6 +242,11 @@ export class RustWorkflow {
     return this;
   }
 
+  additionalPrompt(prompt: string) {
+    this.ai.additional = prompt;
+    return this;
+  }
+
   build() {
     //   os:
     //     - target: aarch64-unknown-linux-gnu
