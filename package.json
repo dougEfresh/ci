@@ -1,17 +1,14 @@
 {
-  "name": "@carteramesh/ci",
+  "name": "@dougefresh/ci",
   "description": "CI Mega Config github action",
   "version": "0.1.0",
   "author": "",
   "type": "module",
   "private": true,
-  "homepage": "https://github.com/carteramesh/ci",
+  "homepage": "https://github.com/dougefresh/ci",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/carteramesh/ci.git"
-  },
-  "bugs": {
-    "url": "https://github.com/carteramesh/ci/issues"
+    "url": "git+https://github.com/dougefresh/ci.git"
   },
   "keywords": ["actions"],
   "exports": {
