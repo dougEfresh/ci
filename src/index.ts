@@ -172,16 +172,16 @@ export class RustWorkflow {
 
   constructor() {
     this.jobs = {
-      fmt: structuredClone(JobDefaults.fmt),
-      docCheck: structuredClone(JobDefaults.docCheck),
-      semver: structuredClone(JobDefaults.semver),
-      dependencies: structuredClone(JobDefaults.dependencies),
-      hack: structuredClone(JobDefaults.hack),
-      cargoSort: structuredClone(JobDefaults.cargoSort),
-      sanitizers: structuredClone(JobDefaults.sanitizers),
-      clippy: structuredClone(JobDefaults.clippy),
-      coverage: structuredClone(JobDefaults.coverage),
-      extra: structuredClone(JobDefaults.extra),
+      fmt: JobDefaults.fmt,
+      docCheck: JobDefaults.docCheck,
+      semver: JobDefaults.semver,
+      dependencies: JobDefaults.dependencies,
+      hack: JobDefaults.hack,
+      cargoSort: JobDefaults.cargoSort,
+      sanitizers: JobDefaults.sanitizers,
+      clippy: JobDefaults.clippy,
+      coverage: JobDefaults.coverage,
+      extra: JobDefaults.extra,
     };
 
     this.global = { packages: {} };
