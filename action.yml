@@ -28,7 +28,6 @@ runs:
         fi
         cat ${{ github.action_path }}/.github/rust-ci.ts
         cd ${{ github.action_path }}
-        npm @typescript/native-preview
         bun install
         bun run build
         CONFIG="$(bun run ./scripts/generate-rust.ts | jq . --compact-output )"
