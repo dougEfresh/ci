@@ -1,26 +1,30 @@
 {
   "name": "@dougefresh/ci",
   "description": "CI Mega Config github action",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "author": "",
   "type": "module",
-  "private": true,
   "homepage": "https://github.com/dougefresh/ci",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dougefresh/ci.git"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "keywords": [
     "actions"
   ],
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./dist/index.js"
   },
+  "types": "./dist/index.d.ts",
   "engines": {
     "node": ">=24.0.0"
   },
   "scripts": {
-    "bundle": "echo npm run format:write && npm run package"
+    "build": "tsc",
+    "prepublishOnly": "bun run build"
   },
   "license": "MIT",
   "dependencies": {},
