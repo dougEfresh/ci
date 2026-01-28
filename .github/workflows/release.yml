@@ -11,6 +11,9 @@ permissions:
 jobs:
   release:
     runs-on: ${{ vars.RUNNER }}
+    permissions:
+      contents: write
+      packages: write
     steps:
       - uses: actions/checkout@v6
 
@@ -21,6 +24,12 @@ jobs:
       - name: Get version
         id: version
         run: echo "tag=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
+
+      - name: Publish to GitHub Packages
+        run: bun publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: softprops/action-gh-release@v2
         name: publish
         with:
