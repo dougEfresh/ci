@@ -20,6 +20,7 @@
     "node": ">=24.0.0"
   },
   "scripts": {
+    "lint": "biome check",
     "build": "tsgo",
     "prepublishOnly": "bun run build"
   },
