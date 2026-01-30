@@ -14,11 +14,12 @@ if (!existsSync(promptPath)) {
 }
 
 const prompt = readFileSync(promptPath, 'utf-8');
-config.ai.prompt = prompt
-  .replaceAll('`', '')
-  .replaceAll("'", "'")
-  .replaceAll("'", "'")
-  .replaceAll('"', '"')
-  .replaceAll('"', '"');
+config.ai.prompt = prompt;
+
+// .replaceAll('`', '')
+// .replaceAll("'", "'")
+// .replaceAll("'", "'")
+// .replaceAll('"', '"')
+// .replaceAll('"', '"');
 
 console.log(JSON.stringify(config, null, 2));
