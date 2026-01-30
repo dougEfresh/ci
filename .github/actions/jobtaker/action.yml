@@ -16,7 +16,7 @@ runs:
       run: |
         {
           echo 'prompt<<EOF'
-          cat claude-prompt.md
+          cat ${{ github.workspace }}/claude-prompt.md
           echo EOF
         } >> $GITHUB_OUTPUT
     - name: jobtaker
