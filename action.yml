@@ -29,7 +29,7 @@ runs:
     - id: prompt
       shell: bash
       run: |
-        PROMPT_CONTENT="$(sed -e 's/%REPO%/${{ github.repository }}/g' -e 's/%PR%/${{ github.event.pull_request.number }}/g' \
+        PROMPT_CONTENT="$(sed -e 's|%REPO%|${{ github.repository }}|g' -e 's|%PR%|${{ github.event.pull_request.number }}|g' \
           ${{ github.action_path }}/prompt-template.md)"
         if [ -f .github/additional-prompt.md ]; then
           PROMPT_CONTENT="${PROMPT_CONTENT}"$'\n'"$(cat .github/additional-prompt.md)"
