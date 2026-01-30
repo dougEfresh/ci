@@ -28,8 +28,8 @@ jobs:
         id: output
         shell: bash
         run: |
-          echo '${{ steps.test-action.outputs.config }}' | jq .
-          packages="${{ fromJSON(steps.test-action.outputs.config).global.packages.Linux }}"
+          #echo '${{ steps.test-action.outputs.config }}' | jq .
+          packages="${{ fromJSON(steps.test-action.outputs.config).ai.enabled }}"
           echo $packages
           # pages="${{ fromJSON(steps.test-action.outputs.config).pages.mdbook.if }}"
 
