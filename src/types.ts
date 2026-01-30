@@ -11,6 +11,7 @@ export interface AiJob {
   claude_args: string;
   use_sticky_comment: boolean;
   track_progress: boolean;
+  prompt: string;
 }
 
 export interface Global {

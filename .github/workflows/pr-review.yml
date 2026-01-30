@@ -52,8 +52,9 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           trigger_phrase: '@jobtaker'
+          label_trigger: 'jobtaker'
           allowed_bots: ${{ fromJSON(needs.config.outputs.config).ai.allowed_bots }}
-          prompt: ${{ needs.config.outputs.prompt }}
+          prompt: ${{ fromJSON(needs.config.outputs.config).ai.prompt }}
           claude_args: ${{ fromJSON(needs.config.outputs.config).ai.claude_args }}
           use_sticky_comment: ${{ fromJSON(needs.config.outputs.config).ai.use_sticky_comment }}
           track_progress: "${{ fromJSON(needs.config.outputs.config).ai.track_progress }}"
