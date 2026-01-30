@@ -58,15 +58,7 @@ jobs:
           allowed_bots: ${{ fromJSON(needs.config.outputs.config).ai.allowed_bots }}
           #            description: "Comma-separated list of allowed bot usernames, or '*' to allow all bots. Empty string (default) allows no bots."
           # Your custom review instructions
-          prompt: |
-            REPO: ${{ github.repository }}
-            PR NUMBER: ${{ github.event.pull_request.number }}
-
-            ${{ fromJSON(needs.config.outputs.config).ai.prompt }}
-
-            ---
-
-            ${{ fromJSON(needs.config.outputs.config).ai.additional }}
+          prompt_file: claude-prompt.md
           # Tools for comprehensive PR review
           claude_args: ${{ fromJSON(needs.config.outputs.config).ai.claude_args }}
           use_sticky_comment: ${{ fromJSON(needs.config.outputs.config).ai.use_sticky_comment }}
