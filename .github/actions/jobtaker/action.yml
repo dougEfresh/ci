@@ -7,18 +7,12 @@ inputs:
   anthropic_api_key:
     description: 'Anthropic API key'
     required: true
+  prompt:
+    description: 'Claude prompt string'
+    required: true
 runs:
   using: 'composite'
   steps:
-    - name: prompt-file-str
-      id: prompt
-      shell: bash
-      run: |
-        {
-          echo 'prompt<<EOF'
-          cat ${{ github.workspace }}/claude-prompt.md
-          echo EOF
-        } >> $GITHUB_OUTPUT
     - name: jobtaker
       if: ${{ fromJSON(inputs.config).ai.enabled }}
       uses: anthropics/claude-code-action@main
@@ -26,7 +20,7 @@ runs:
         anthropic_api_key: ${{ inputs.anthropic_api_key }}
         trigger_phrase: '@jobtaker'
         allowed_bots: ${{ fromJSON(inputs.config).ai.allowed_bots }}
-        prompt: ${{ steps.prompt.outputs.prompt }}
+        prompt: ${{ inputs.prompt }}
         claude_args: ${{ fromJSON(inputs.config).ai.claude_args }}
         use_sticky_comment: ${{ fromJSON(inputs.config).ai.use_sticky_comment }}
         track_progress: "${{ fromJSON(inputs.config).ai.track_progress }}"

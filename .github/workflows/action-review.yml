@@ -19,6 +19,7 @@ jobs:
     name: generate config
     outputs:
       config: ${{ steps.config.outputs.config }}
+      prompt: ${{ steps.config.outputs.prompt }}
     steps:
       - name: Validate ANTHROPIC_API_KEY
         shell: bash
@@ -55,3 +56,4 @@ jobs:
         with:
           config: ${{ needs.config.outputs.config }}
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: ${{ needs.config.outputs.prompt }}
