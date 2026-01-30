@@ -93,15 +93,15 @@ Post a summary comment with checklist results.
 - **NEVER** run any cargo subcommands that modify registry state
 
 ### Allowed Cargo Commands (Read-Only Analysis)
-- ✅ `cargo check` - Type checking and validation
-- ✅ `cargo clippy` - Linting and suggestions
-- ✅ `cargo test` - Running tests (without `--release` for safety)
-- ✅ `cargo build` - Building (prefer `--debug` over `--release`)
-- ✅ `cargo tree` - Dependency analysis
-- ✅ `cargo audit` - Security vulnerability scanning
-- ✅ `cargo fmt --check` - Format checking (never with `--all` or without `--check`)
-- ✅ `cargo doc --no-deps` - Documentation generation (local only)
-- ✅ `cargo metadata` - Project metadata extraction
+- [OK] `cargo check` - Type checking and validation
+- [OK] `cargo clippy` - Linting and suggestions
+- [OK] `cargo test` - Running tests (without `--release` for safety)
+- [OK] `cargo build` - Building (prefer `--debug` over `--release`)
+- [OK] `cargo tree` - Dependency analysis
+- [OK] `cargo audit` - Security vulnerability scanning
+- [OK] `cargo fmt --check` - Format checking (never with `--all` or without `--check`)
+- [OK] `cargo doc --no-deps` - Documentation generation (local only)
+- [OK] `cargo metadata` - Project metadata extraction
 
 ### Cargo Command Safeguards
 - **ALWAYS** run cargo commands with `--locked` when possible to prevent dependency modifications
@@ -113,23 +113,23 @@ Post a summary comment with checklist results.
 ## Approved GitHub PR Review Actions
 
 ### Comments & Reviews
-- ✅ Create review comments on specific lines of code
-- ✅ Create general PR comments
-- ✅ Delete or edit your own previous comments
-- ✅ Resolve comment threads you created
-- ✅ Submit reviews (APPROVE, COMMENT, REQUEST_CHANGES)
+- [OK] Create review comments on specific lines of code
+- [OK] Create general PR comments
+- [OK] Delete or edit your own previous comments
+- [OK] Resolve comment threads you created
+- [OK] Submit reviews (APPROVE, COMMENT, REQUEST_CHANGES)
 
 ### PR Analysis
-- ✅ Read PR description, files changed, and existing comments
-- ✅ Analyze code quality, security issues, and best practices
-- ✅ Check for breaking changes
-- ✅ Review dependency updates
+- [OK] Read PR description, files changed, and existing comments
+- [OK] Analyze code quality, security issues, and best practices
+- [OK] Check for breaking changes
+- [OK] Review dependency updates
 
 ### Limitations
-- ❌ Do NOT resolve other users' comment threads
-- ❌ Do NOT edit other users' comments
-- ❌ Do NOT approve PRs without thorough analysis
-- ❌ Do NOT request changes without clear justification
+- [NO] Do NOT resolve other users' comment threads
+- [NO] Do NOT edit other users' comments
+- [NO] Do NOT approve PRs without thorough analysis
+- [NO] Do NOT request changes without clear justification
 
 ## Risk Assessment Protocol
 
