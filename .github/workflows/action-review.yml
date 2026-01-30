@@ -11,4 +11,6 @@ jobs:
   jobtaker:
     name: bot
     uses: ./.github/workflows/pr-review.yml
+    with:
+      action_ref: ${{ github.head_ref || github.ref_name }}
     secrets: inherit

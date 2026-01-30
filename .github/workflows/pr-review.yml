@@ -1,6 +1,11 @@
 name: jobtaker
 on:
   workflow_call:
+    inputs:
+      action_ref:
+        description: 'Ref to use for dougefresh/ci actions'
+        type: string
+        default: 'main'
 permissions:
   contents: read
   checks: write
@@ -28,7 +33,7 @@ jobs:
           fi
       - name: config
         id: config
-        uses: dougefresh/ci/.github/actions/rust-config@main
+        uses: dougefresh/ci/.github/actions/rust-config@${{ inputs.action_ref }}
         with:
           arm64: ${{ vars.RUNNER_ARM64 }}
           amd64: ${{ vars.RUNNER_AMD64 }}
@@ -44,7 +49,7 @@ jobs:
     runs-on: ${{ vars.RUNNER }}
     steps:
       - name: checkout
-        uses: dougefresh/ci/.github/actions/rust-init@main
+        uses: dougefresh/ci/.github/actions/rust-init@${{ inputs.action_ref }}
         with:
           packages: ${{ toJSON(fromJSON(needs.config.outputs.config).global.packages) }}
       - name: jobtaker
