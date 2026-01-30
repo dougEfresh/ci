@@ -1,18 +1,12 @@
 name: jobtaker
 on:
   workflow_call:
-    inputs:
-      action_ref:
-        description: 'Ref to use for dougefresh/ci actions'
-        type: string
-        default: 'main'
 permissions:
   contents: read
   checks: write
   pull-requests: write
   id-token: write
 jobs:
-
   config:
     if: |
       (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@jobtaker')) ||
@@ -53,8 +47,24 @@ jobs:
         with:
           packages: ${{ toJSON(fromJSON(needs.config.outputs.config).global.packages) }}
       - name: jobtaker
-        uses: dougefresh/ci/.github/actions/jobtaker@main
+        if: ${{ fromJSON(needs.config.outputs.config).ai.enabled }}
+        uses: anthropics/claude-code-action@main
         with:
-          config: ${{ needs.config.outputs.config }}
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          trigger_phrase: '@jobtaker'
+          allowed_bots: ${{ fromJSON(needs.config.outputs.config).ai.allowed_bots }}
           prompt: ${{ needs.config.outputs.prompt }}
+          claude_args: ${{ fromJSON(needs.config.outputs.config).ai.claude_args }}
+          use_sticky_comment: ${{ fromJSON(needs.config.outputs.config).ai.use_sticky_comment }}
+          track_progress: "${{ fromJSON(needs.config.outputs.config).ai.track_progress }}"
+          path_to_claude_code_executable: ''
+          path_to_bun_executable: ''
+          show_full_output: 'false'
+          plugins: ''
+          plugin_marketplaces: ''
+
+# When track_progress is enabled:
+# - Creates a tracking comment with progress checkboxes
+# - Includes all PR context (comments, attachments, images)
+# - Updates progress as the review proceeds
+# - Marks as completed when done
