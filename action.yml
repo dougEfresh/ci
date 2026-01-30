@@ -8,6 +8,9 @@ outputs:
   config:
     description: JSON string of the config
     value: ${{ steps.generate.outputs.config }}
+  prompt:
+    description: Claude prompt string
+    value: ${{ steps.prompt.outputs.prompt }}
 runs:
   using: composite
   steps:
@@ -26,11 +29,16 @@ runs:
     - id: prompt
       shell: bash
       run: |
-        sed -e 's/%REPO%/{{ github.repository }}/g' -e 's/%PR%/{{ github.event.pull_request.number }}/g' \
-          ${{ github.action_path }}/prompt-template.md > claude-prompt.md
-        if [ -f .github/additional-prompt.md ] ; then
-          cat .github/additional-prompt.md >> claude-prompt.md
+        PROMPT_CONTENT="$(sed -e 's|%REPO%|${{ github.repository }}|g' -e 's|%PR%|${{ github.event.pull_request.number }}|g' \
+          ${{ github.action_path }}/prompt-template.md)"
+        if [ -f .github/additional-prompt.md ]; then
+          PROMPT_CONTENT="${PROMPT_CONTENT}"$'\n'"$(cat .github/additional-prompt.md)"
         fi
+        {
+          echo 'prompt<<EOF'
+          echo "$PROMPT_CONTENT"
+          echo EOF
+        } >> $GITHUB_OUTPUT
     - id: generate
       name: generate
       shell: bash
