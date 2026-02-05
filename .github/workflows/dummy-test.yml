@@ -8,9 +8,10 @@ on:
   pull_request:
 jobs:
   verify:
-    if: true
     name: dummy
     uses: ./.github/workflows/rust.yml
     secrets: inherit
-    with:
-      runner: ${{ vars.RUNNER }}
+  pages:
+    name: pages-dummy
+    uses: ./.github/workflows/pages.yml
+    secrets: inherit

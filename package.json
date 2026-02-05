@@ -25,7 +25,8 @@
     "node": ">=24.0.0"
   },
   "scripts": {
-    "precommit": "rm -rf dist && bun run lint && bun run build",
+    "precommit": "rm -rf dist && bun run lint:fix && bun run build",
+    "lint:fix": "biome check --fix && biome format --write ",
     "lint": "biome check",
     "build": "tsgo",
     "prepublishOnly": "bun run build"
