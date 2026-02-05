@@ -1,6 +1,8 @@
 name: dummy
 permissions:
-  contents: read
+  contents: write
+  pages: write
+  id-token: write
   checks: write
 on:
   push:
