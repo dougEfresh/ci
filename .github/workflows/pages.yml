@@ -38,6 +38,8 @@ jobs:
             tar zxf mdbook-*.tar.gz
           fi
           ./mdbook build ./docs
+          echo $PATH
+          sudo cp mdbook /usr/local/bin
       - name: Build Book
         run: |
           cd ${{ fromJSON(needs.config.outputs.config).pages.mdbook.path }}
