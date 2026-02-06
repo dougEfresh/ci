@@ -18,6 +18,7 @@ export interface PageJobs {
 
 export interface AiJob {
   enabled: boolean;
+  model: string;
   allowed_bots: string;
   claude_args: string;
   use_sticky_comment: boolean;

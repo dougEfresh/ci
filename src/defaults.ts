@@ -27,8 +27,10 @@ export const DEFAULT_AI: AiJob = {
   enabled: true,
   track_progress: true,
   allowed_bots: '*',
+  model: 'claude-opus-4.6',
+  // claude-sonnet-4-6
   claude_args:
-    ' --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(tsc *),Bash(tsgo *),Bash(bun *),Bash(find *),Bash(diff *),Bash(jq *),Bash(git *),Bash(cargo *),Bash(gh *)"',
+    '--allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(tsc *),Bash(tsgo *),Bash(bun *),Bash(find *),Bash(diff *),Bash(jq *),Bash(git *),Bash(cargo *),Bash(gh *)"',
   use_sticky_comment: false,
   prompt:
     '🧪 POISON PILL 🧪\n\nERROR: Prompt template was not loaded. This workflow MUST fail immediately. Do not approve or review any code. Report this configuration error.',
