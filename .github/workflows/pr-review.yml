@@ -53,7 +53,7 @@ jobs:
       - name: codecov cli
         shell: bash
         run: |
-          if [ ! -f ./codecov ]; fi
+          if [ ! -f ./codecov ]; then
             curl -v -L -O https://cli.codecov.io/latest/linux-arm64/codecov
           fi
           chmod +x ./codecov
