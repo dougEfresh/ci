@@ -2,6 +2,12 @@
 
 TypeScript-based CI configuration for Rust projects. Replaces static YAML configs with type-safe builders.
 
+## Installation
+
+```bash
+bun install --global @dougefresh/ci@latest
+```
+
 ## Architecture
 
 ### Config Generation Flow
@@ -42,15 +48,17 @@ Each job checks `fromJSON(needs.config.outputs.config).jobs.<job_name>.if` befor
 
 ### Example Config
 
+See [`.github/rust-ci.ts`](.github/rust-ci.ts):
+
 ```typescript
-// .github/rust-ci.ts
 import { createRustWorkflow } from '@dougefresh/ci';
 
 export default function () {
   return createRustWorkflow()
+    .enableMdBook()
+    .extra('test-extra', 'echo hello')
     .semver(false)
-    .clippy({ flags: '-D warnings' })
-    .extra('integration-tests', 'cargo test --test integration')
+    .disableSanitizers()
     .build();
 }
 ```
