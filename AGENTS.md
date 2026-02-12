@@ -16,9 +16,9 @@ Review README.md for design flow
 
 ### Validation Prompt Detection
 
-Before performing code review, verify that `.github/additional-prompt.md` was successfully injected into your prompt context:
+Before performing code review, verify that `.github/agents/additional-prompt.md` was successfully injected into your prompt context:
 
-1. **Self-check**: Check if `.github/additional-prompt.md` is present in your context/prompt
+1. **Self-check**: Check if `.github/agents/additional-prompt.md` is present in your context/prompt
 2. **Report status**:
    - ✅ If found: Proceed with validation tasks defined in that file
    - ❌ If not found: Report "Validation prompt not loaded - skipping QA checks" and continue with standard code review only
