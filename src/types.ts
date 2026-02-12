@@ -56,6 +56,10 @@ export interface Dependencies extends BaseJob {}
 export interface Extra extends BaseJob {
   name: string;
   matrix: Matrix;
+  cache?: {
+    cargoTools?: string[];
+    paths?: string[];
+  };
 }
 export interface Sanitizers {
   enabled: boolean;
