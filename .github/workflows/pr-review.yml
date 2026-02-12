@@ -58,11 +58,21 @@ jobs:
           fi
           chmod +x ./codecov
           sudo cp -v  ./codecov /usr/local/bin
+      - name: settings
+        id: settings
+        shell: bash
+        run: |
+          if [ -f .github/agents/claude-settings.json ]; then
+            echo "settings=.github/agents/claude-settings.json" >> $GITHUB_OUTPUT
+          else
+            echo "settings=${{ github.action_path }}/.github/agents/claude-settings.json" >> $GITHUB_OUTPUT
+          fi
       - name: jobtaker
         if: ${{ fromJSON(needs.config.outputs.config).ai.enabled }}
         uses: anthropics/claude-code-action@main
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          settings: ${{ steps.settings.outputs.settings }}
           trigger_phrase: '@jobtaker'
           label_trigger: 'jobtaker'
           allowed_bots: ${{ fromJSON(needs.config.outputs.config).ai.allowed_bots }}
