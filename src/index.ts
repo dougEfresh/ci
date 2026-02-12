@@ -72,10 +72,13 @@ export class RustWorkflow {
     return this;
   }
 
-  extra(name: string, run: string) {
+  extra(name: string, run: string, cache?: { cargoTools?: string[]; paths?: string[] }) {
     this.jobs.extra.if = true;
     this.jobs.extra.name = name;
     this.jobs.extra.run = run;
+    if (cache) {
+      this.jobs.extra.cache = cache;
+    }
     return this;
   }
 
