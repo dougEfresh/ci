@@ -72,6 +72,10 @@ export class RustWorkflow {
     return this;
   }
 
+  disableCoverage() {
+    this.jobs.coverage.if = true;
+    return this;
+  }
   extra(name: string, run: string, cache?: { cargoTools?: string[]; paths?: string[] }) {
     this.jobs.extra.if = true;
     this.jobs.extra.name = name;
