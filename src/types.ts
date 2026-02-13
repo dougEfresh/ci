@@ -16,10 +16,22 @@ export interface PageJobs {
   mdbook: PageJob;
 }
 
+export interface ClaudeSettings {
+  permissions: {
+    allow: string[];
+    deny?: string[];
+  };
+  env?: Record<string, string>;
+  respectGitignore?: boolean;
+  effortLevel?: 'low' | 'medium' | 'high';
+  [key: string]: any;
+}
+
 export interface AiJob {
   enabled: boolean;
   model: string;
   allowed_bots: string;
+  claude_settings: ClaudeSettings;
   claude_args: string;
   use_sticky_comment: boolean;
   track_progress: boolean;
