@@ -27,7 +27,7 @@ jobs:
           fi
       - name: config
         id: config
-        uses: dougefresh/ci/.github/actions/rust-config@remove-tojson
+        uses: dougefresh/ci/.github/actions/rust-config@main
         with:
           arm64: ${{ vars.RUNNER_ARM64 }}
           amd64: ${{ vars.RUNNER_AMD64 }}
@@ -43,7 +43,7 @@ jobs:
     runs-on: ${{ vars.RUNNER }}
     steps:
       - name: checkout
-        uses: dougefresh/ci/.github/actions/rust-init@remove-tojson
+        uses: dougefresh/ci/.github/actions/rust-init@main
         with:
           packages: ${{ toJSON(fromJSON(needs.config.outputs.config).global.packages) }}
       - uses: ubicloud/cache@v4
@@ -63,7 +63,7 @@ jobs:
         uses: anthropics/claude-code-action@main
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          settings: ${{ fromJSON(needs.config.outputs.config).ai.claude_settings }}
+          settings: ${{ toJSON(fromJSON(needs.config.outputs.config).ai.claude_settings) }}
           trigger_phrase: '@jobtaker'
           label_trigger: 'jobtaker'
           allowed_bots: ${{ fromJSON(needs.config.outputs.config).ai.allowed_bots }}
