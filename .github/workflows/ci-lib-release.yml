@@ -3,12 +3,10 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  packages: write
 jobs:
   release:
     runs-on: ${{ vars.RUNNER }}
-    permissions:
-      contents: write
-      packages: write
     steps:
       - uses: actions/checkout@v6
       - uses: oven-sh/setup-bun@v2
@@ -19,11 +17,14 @@ jobs:
         run: bun install && bun run build
       - name: Get version
         id: version
-        run: echo "tag=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
-      - name: Publish
-        run: bun publish --access public
-      # - name: Publish to npm
-        # run: npm publish
+        run: |
+          tag=$(jq -r .version package.json)
+          echo $tag
+          echo "tag=$tag" >> $GITHUB_OUTPUT
+      # - name: Publish
+        # run: bun publish --access public
+      - name: Publish to npm
+        run: npm publish --tag latest --access public
       - uses: softprops/action-gh-release@v2
         name: publish
         with:
