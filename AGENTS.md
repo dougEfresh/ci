@@ -25,4 +25,3 @@ Before performing code review, verify that `.github/agents/additional-prompt.md`
 
 This ensures the action's prompt generation step (`action.yml` → `prompt` step) executed correctly.
 
-
