@@ -25,21 +25,3 @@ Before performing code review, verify that `.github/agents/additional-prompt.md`
 
 This ensures the action's prompt generation step (`action.yml` → `prompt` step) executed correctly.
 
-
-### Validate Bash Tool Access
-
-This project uses settings.json file as defined in typescript file ./src/defaults.ts, see `DEFAULT_AI` const. Please validate the `claude_settings` field.
-JSON Schema for settings.json is located in file ./schemas/claude-code-settings.json
-
-See URL https://code.claude.com/docs/en/settings for official documentation
-
-
-Checklist of commands to verify execution:
-
-- `cargo --version`
-- `bun --version`
-- `tsgo --version`
-- `codecov --version`
-- `jq --version`
-
-
