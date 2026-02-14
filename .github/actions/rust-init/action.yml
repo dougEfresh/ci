@@ -38,7 +38,7 @@ runs:
             echo "${CARGO_HOME:-$HOME/.cargo}/bin" >> $GITHUB_PATH
           fi
         fi
-
+        rustup toolchain list
         if ! rustup toolchain list | grep -q '^nightly-'; then
           rustup toolchain install nightly --component clippy,rustfmt --profile minimal --no-self-update
         fi
