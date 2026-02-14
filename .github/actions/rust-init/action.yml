@@ -43,8 +43,12 @@ runs:
       id: rust
       shell: bash
       run: |
-        rustup toolchain install stable --component clippy --profile minimal --no-self-update
-        rustup toolchain install nightly --component clippy,rustfmt --profile minimal --no-self-update
+        if ! rustup toolchain list | grep -q '^stable-'; then
+          rustup toolchain install stable --component clippy --profile minimal --no-self-update
+        fi
+        if ! rustup toolchain list | grep -q '^nightly-'; then
+          rustup toolchain install nightly --component clippy,rustfmt --profile minimal --no-self-update
+        fi
         rustup default stable
         echo "name=stable" >> $GITHUB_OUTPUT
     - name: Debug versions
