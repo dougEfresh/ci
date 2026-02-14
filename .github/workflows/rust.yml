@@ -88,12 +88,10 @@ jobs:
         with:
           packages: ${{ toJSON(fromJSON(needs.config.outputs.config).global.packages) }}
       - name: clippy / ${{ matrix.features }}
-        uses: giraffate/clippy-action@v1
-        with:
-          reporter: 'github-pr-check'
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          tool_name: clippy-${{ matrix.toolchains }}-${{ matrix.features }}
-          clippy_flags: ${{ matrix.features != 'default' && format('--features {0}', matrix.features) || '' }}
+        shell: bash
+        run: |
+          FLAGS="${{ matrix.features != 'default' && format('--features {0}', matrix.features) || '' }}"
+          cargo clippy --all-targets $FLAGS -- -D warnings
   semver:
     needs: [config]
     runs-on: ${{ vars.RUNNER_AMD64 }}
