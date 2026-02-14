@@ -66,7 +66,34 @@ export class RustWorkflow {
     this.global.packages.Linux = packages.join(',');
     return this;
   }
-
+  disableFmt() {
+    this.jobs.fmt.if = false;
+    return this;
+  }
+  disableDocCheck() {
+    this.jobs.docCheck.if = false;
+    return this;
+  }
+  disableDependencies() {
+    this.jobs.dependencies.if = false;
+    return this;
+  }
+  disableHack() {
+    this.jobs.hack.if = false;
+    return this;
+  }
+  disableCargoSort() {
+    this.jobs.cargoSort.if = false;
+    return this;
+  }
+  disableClippy() {
+    this.jobs.clippy.if = false;
+    return this;
+  }
+  disableSemver(enable: boolean) {
+    this.jobs.semver.if = enable;
+    return this;
+  }
   semver(enable: boolean) {
     this.jobs.semver.if = enable;
     return this;
@@ -96,6 +123,11 @@ export class RustWorkflow {
     return this;
   }
 
+  configPages(config: PageJobs) {
+    this.pages = config;
+    return this;
+  }
+
   clippy(opts?: Partial<Clippy>) {
     if (opts?.flags) this.jobs.clippy.flags = opts.flags;
     if (opts?.run) this.jobs.clippy.run = opts.run;
@@ -116,6 +148,16 @@ export class RustWorkflow {
 
   disableAi() {
     this.ai.enabled = false;
+    return this;
+  }
+
+  configureAi(config: AiJob) {
+    this.ai = config;
+    return this;
+  }
+
+  configureRelease(config: Release) {
+    this.release = config;
     return this;
   }
 
