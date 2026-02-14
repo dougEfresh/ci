@@ -44,7 +44,7 @@ runs:
       shell: bash
       run: |
         rustup toolchain install stable --component clippy --profile minimal --no-self-update
-        rustup toolchain install nightly --component clippy --profile minimal --no-self-update
+        rustup toolchain install nightly --component clippy,rustfmt --profile minimal --no-self-update
         rustup default stable
         echo "name=stable" >> $GITHUB_OUTPUT
     - name: Debug versions
