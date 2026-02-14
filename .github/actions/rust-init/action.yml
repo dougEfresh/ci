@@ -29,7 +29,8 @@ runs:
       shell: bash
       run: |
         if ! command -v rustup &> /dev/null ; then
-          curl --proto '=https' --tlsv1.2 --retry 10 --retry-connrefused -fsSL "https://sh.rustup.rs" | sh -s -- --default-toolchain none -y
+          echo "downloading rustup"
+          curl --proto '=https' --tlsv1.2 --retry 10 --retry-connrefused -fsSL "https://sh.rustup.rs" | sh -s -- --default-toolchain stable -y
           # Resolve the correct CARGO_HOME path depending on OS
           if [[ "$RUNNER_OS" == "Windows" ]]; then
             echo "${CARGO_HOME:-$USERPROFILE/.cargo}/bin" | sed 's|/|\\|g' >> $GITHUB_PATH
@@ -37,25 +38,16 @@ runs:
             echo "${CARGO_HOME:-$HOME/.cargo}/bin" >> $GITHUB_PATH
           fi
         fi
-      env:
-        RUNNER_OS: "${{ runner.os }}"
-    - name: Install rust
-      id: rust
-      shell: bash
-      run: |
-        if ! rustup toolchain list | grep -q '^stable-'; then
-           rustup toolchain install stable --component clippy --profile minimal --no-self-update
-           rustup default stable
-        fi
+
         if ! rustup toolchain list | grep -q '^nightly-'; then
           rustup toolchain install nightly --component clippy,rustfmt --profile minimal --no-self-update
         fi
         echo "name=stable" >> $GITHUB_OUTPUT
-    - name: Debug versions
-      shell: bash
-      run: |
+
         cargo +nightly --version
         cargo +stable --version
+      env:
+        RUNNER_OS: "${{ runner.os }}"
     - name: packages
       shell: bash
       if: ${{ inputs.packages }}
