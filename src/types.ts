@@ -102,13 +102,16 @@ export interface RustJobs {
 }
 
 export interface Release {
-  bin: boolean;
   publish: boolean;
   debian: boolean;
   profile: string;
-  os: Os[];
-  homebrew: {
-    if: boolean | string;
-    repo: string;
+  bin: {
+    name: string;
+    linux: {
+      arm64: boolean;
+      amd64: boolean;
+    };
+    win: boolean;
+    mac: boolean;
   };
 }

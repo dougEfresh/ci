@@ -5,9 +5,9 @@ permissions:
   id-token: write
   checks: write
 on:
+  workflow_dispatch:
   push:
     branches: [main]
-  pull_request:
 jobs:
   verify:
     name: dummy
