@@ -119,15 +119,6 @@ export class RustWorkflow {
     this.jobs.coverage.if = true;
     return this;
   }
-  extra(name: string, run: string, cache?: { cargoTools?: string[]; paths?: string[] }) {
-    this.jobs.extra.if = true;
-    this.jobs.extra.name = name;
-    this.jobs.extra.run = run;
-    if (cache) {
-      this.jobs.extra.cache = cache;
-    }
-    return this;
-  }
 
   withRelease(r: Release) {
     this.release = r;
@@ -144,18 +135,23 @@ export class RustWorkflow {
     return this;
   }
 
-  extraJob(opts?: Partial<Extra>) {
-    if (opts?.run) this.jobs.extra.run = opts.run;
-    if (opts?.if !== undefined) this.jobs.extra.if = opts.if;
-    if (opts?.continueOnError !== undefined) this.jobs.extra.continueOnError = opts.continueOnError;
-    if (opts?.cache) {
+  extraJob(name: string, opts: Partial<Extra>) {
+    this.jobs.extra.name = name;
+    if (opts.if === undefined) {
+      this.jobs.extra.if = true;
+    }
+    if (opts.run) this.jobs.extra.run = opts.run;
+    if (opts.if !== undefined) this.jobs.extra.if = opts.if;
+    if (opts.continueOnError !== undefined) this.jobs.extra.continueOnError = opts.continueOnError;
+    if (opts.cache) {
       this.jobs.extra.cache = opts.cache;
     }
-    if (opts?.matrix) {
+    if (opts.matrix) {
       if (opts.matrix.toolchains) this.jobs.extra.matrix.toolchains = opts.matrix.toolchains;
       if (opts.matrix.features) this.jobs.extra.matrix.features = opts.matrix.features;
       if (opts.matrix.os) this.jobs.extra.matrix.os = opts.matrix.os;
     }
+    return this;
   }
 
   coverage(opts?: Partial<Coverage>) {
