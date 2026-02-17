@@ -1,6 +1,6 @@
-export enum Arch {
-  ARM64 = 'vars.RUNNER_ARM64',
-  AMD64 = 'vars.RUNNER_AMD64',
+export enum Os {
+  LINUX_ARM64 = 'vars.RUNNER_ARM64',
+  LINUX_AMD64 = 'vars.RUNNER_AMD64',
   WIN = 'vars.RUNNER_WIN',
   MAC = 'vars.RUNNER_MAC',
 }
@@ -54,7 +54,7 @@ export interface BaseJob {
 }
 
 export interface Matrix {
-  os: Arch[];
+  os: Os[];
   toolchains: string[];
   features: string[];
 }
@@ -106,5 +106,9 @@ export interface Release {
   publish: boolean;
   debian: boolean;
   profile: string;
-  os: Arch[];
+  os: Os[];
+  homebrew: {
+    if: boolean | string;
+    repo: string;
+  };
 }

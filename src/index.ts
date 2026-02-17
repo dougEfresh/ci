@@ -11,8 +11,9 @@ import {
   DEFAULT_PAGES,
   DEFAULT_SANITIZERS,
   DEFAULT_SEMVER,
+  osToTarget,
 } from './defaults';
-import { type AiJob, Arch, type Clippy, type Global, type PageJobs, type Release, type RustJobs } from './types';
+import { type AiJob, type Clippy, type Global, Os, type PageJobs, type Release, type RustJobs } from './types';
 
 export * from './types';
 
@@ -56,7 +57,11 @@ export class RustWorkflow {
       bin: false,
       debian: false,
       profile: 'release',
-      os: [Arch.AMD64],
+      os: [Os.LINUX_AMD64],
+      homebrew: {
+        if: false,
+        repo: '',
+      },
     };
     this.ai = DEFAULT_AI;
     this.pages = DEFAULT_PAGES;
@@ -162,15 +167,7 @@ export class RustWorkflow {
   }
 
   build() {
-    //   os:
-    //     - target: aarch64-unknown-linux-gnu
-    //       os: ubicloud-standard-8-arm
-    //     - target: x86_64-unknown-linux-gnu
-    //       os: ubicloud-standard-4
-    //     - target: aarch64-apple-darwin
-    //       os: macos-latest
-    // #    - target: x86_64-pc-windows-msvc
-    // #      os: windows-latest
+    const target = this.release.os.map((a) => osToTarget(a));
     return {
       ai: this.ai,
       pages: this.pages,
@@ -180,9 +177,10 @@ export class RustWorkflow {
         debian: this.release.debian,
         profile: this.release.profile,
         matrix: {
-          os: [Arch.AMD64],
-          target: ['x86_64-unknown-linux-gnu'],
+          os: this.release.os,
+          target,
         },
+        homebrew: this.release.homebrew,
       },
       global: this.global,
       jobs: this.jobs,

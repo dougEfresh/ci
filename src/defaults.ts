@@ -1,6 +1,5 @@
 import {
   type AiJob,
-  Arch,
   type CargoSort,
   type Clippy,
   type Coverage,
@@ -9,10 +8,26 @@ import {
   type Extra,
   type Fmt,
   type Hack,
+  Os,
   type PageJobs,
   type Sanitizers,
   type SemVer,
 } from './types';
+
+export function osToTarget(os: Os): string {
+  switch (os) {
+    case Os.LINUX_AMD64:
+      return 'x86_64-unknown-linux-gnu';
+    case Os.LINUX_ARM64:
+      return 'aarch64-unknown-linux-gnu';
+    case Os.MAC:
+      return 'aarch64-apple-darwin';
+    case Os.WIN:
+      return 'x86_64-pc-windows-msvc';
+    default:
+      throw new Error(`Unsupported OS: ${os}`);
+  }
+}
 
 export const DEFAULT_PAGES: PageJobs = {
   mdbook: {
@@ -117,7 +132,7 @@ export const DEFAULT_COVERAGE: Coverage = {
   if: true,
   continueOnError: false,
   matrix: {
-    os: [Arch.ARM64],
+    os: [Os.LINUX_ARM64],
     toolchains: ['stable'],
     features: ['default'],
   },
@@ -137,7 +152,7 @@ export const DEFAULT_CLIPPY: Clippy = {
   run: '',
   flags: '',
   matrix: {
-    os: [Arch.ARM64],
+    os: [Os.LINUX_ARM64],
     toolchains: ['stable'],
     features: ['default'],
   },
@@ -149,7 +164,7 @@ export const DEFAULT_EXTRA: Extra = {
   run: '',
   name: 'extra',
   matrix: {
-    os: [Arch.ARM64],
+    os: [Os.LINUX_ARM64],
     toolchains: ['stable'],
     features: ['default'],
   },
