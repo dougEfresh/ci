@@ -1,5 +1,11 @@
 # @dougefresh/ci
 
+## 0.1.29
+
+### Patch Changes
+
+- 45c17e0: replace extra with extraJob
+
 ## 0.1.28
 
 ### Patch Changes
