@@ -17,6 +17,7 @@ import {
   type AiJob,
   type Clippy,
   type Coverage,
+  type Extra,
   type Global,
   Os,
   type PageJobs,
@@ -143,6 +144,20 @@ export class RustWorkflow {
     return this;
   }
 
+  extraJob(opts?: Partial<Extra>) {
+    if (opts?.run) this.jobs.extra.run = opts.run;
+    if (opts?.if !== undefined) this.jobs.extra.if = opts.if;
+    if (opts?.continueOnError !== undefined) this.jobs.extra.continueOnError = opts.continueOnError;
+    if (opts?.cache) {
+      this.jobs.extra.cache = opts.cache;
+    }
+    if (opts?.matrix) {
+      if (opts.matrix.toolchains) this.jobs.extra.matrix.toolchains = opts.matrix.toolchains;
+      if (opts.matrix.features) this.jobs.extra.matrix.features = opts.matrix.features;
+      if (opts.matrix.os) this.jobs.extra.matrix.os = opts.matrix.os;
+    }
+  }
+
   coverage(opts?: Partial<Coverage>) {
     if (opts?.run) this.jobs.coverage.run = opts.run;
     if (opts?.if !== undefined) this.jobs.coverage.if = opts.if;
@@ -154,6 +169,7 @@ export class RustWorkflow {
     }
     return this;
   }
+
   clippy(opts?: Partial<Clippy>) {
     if (opts?.flags) this.jobs.clippy.flags = opts.flags;
     if (opts?.run) this.jobs.clippy.run = opts.run;
