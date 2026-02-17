@@ -75,6 +75,7 @@ jobs:
               echo "prerelease=false" >> $GITHUB_OUTPUT
               ;;
           esac
+
           echo "bin=${{ fromJSON(needs.config.outputs.config).release.bin.name }}" >> $GITHUB_OUTPUT
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -86,7 +87,7 @@ jobs:
 
   linux-arm64:
     name: Linux ARM64
-    if: ${{ needs.release.outputs.bin }}
+    if: needs.release.outputs.bin && fromJSON(needs.config.outputs.config).release.bin.linux.arm64
     needs: [config, release]
     runs-on: ${{ vars.RUNNER_ARM64 }}
     env:
@@ -116,8 +117,8 @@ jobs:
 
   linux-amd64:
     name: Linux AMD64
-    if: ${{ needs.release.output.bin }}
     needs: [config, release]
+    if: needs.release.outputs.bin && fromJSON(needs.config.outputs.config).release.bin.linux.amd64
     runs-on: ${{ vars.RUNNER_AMD64 }}
     env:
       BIN: ${{ needs.release.outputs.bin }}
@@ -146,7 +147,7 @@ jobs:
 
   mac-arm:
     name: macOS ARM64
-    if: ${{ needs.release.outputs.bin }}
+    if: needs.release.outputs.bin != '' && fromJSON(needs.config.outputs.config).release.bin.mac == 'true'
     needs: [config, release]
     runs-on: macos-latest
     permissions:
