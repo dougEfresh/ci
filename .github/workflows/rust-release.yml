@@ -25,7 +25,7 @@ jobs:
     steps:
       - name: config
         id: config
-        uses: dougefresh/ci/.github/actions/rust-config@release-bin
+        uses: dougefresh/ci/.github/actions/rust-config@main
         with:
           arm64: ${{ vars.RUNNER_ARM64 }}
           amd64: ${{ vars.RUNNER_AMD64 }}
@@ -41,7 +41,7 @@ jobs:
       contents: write
     steps:
       - name: Init
-        uses: dougefresh/ci/.github/actions/rust-init@release-bin
+        uses: dougefresh/ci/.github/actions/rust-init@main
       - name: Install cargo-release
         uses: taiki-e/cache-cargo-install-action@v3
         with:
@@ -96,7 +96,7 @@ jobs:
       contents: write
     steps:
       - name: Init
-        uses: dougefresh/ci/.github/actions/rust-init@release-bin
+        uses: dougefresh/ci/.github/actions/rust-init@main
         with:
           ref: ${{ needs.release.outputs.tag }}
       - name: Build
@@ -126,7 +126,7 @@ jobs:
       contents: write
     steps:
       - name: Init
-        uses: dougefresh/ci/.github/actions/rust-init@release-bin
+        uses: dougefresh/ci/.github/actions/rust-init@main
         with:
           ref: ${{ needs.release.outputs.tag }}
       - name: Build
@@ -147,7 +147,7 @@ jobs:
 
   mac-arm:
     name: macOS ARM64
-    if: needs.release.outputs.bin != '' && fromJSON(needs.config.outputs.config).release.bin.mac == 'true'
+    if: needs.release.outputs.bin != '' && fromJSON(needs.config.outputs.config).release.bin.mac
     needs: [config, release]
     runs-on: macos-latest
     permissions:
@@ -156,7 +156,7 @@ jobs:
       BIN_NAME: ${{ needs.release.output.bin }}
     steps:
       - name: Init
-        uses: dougefresh/ci/.github/actions/rust-init@release-bin
+        uses: dougefresh/ci/.github/actions/rust-init@main
         with:
           ref: ${{ needs.release.outputs.tag }}
       - name: Build
@@ -184,7 +184,7 @@ jobs:
       contents: write
     steps:
       - name: Init
-        uses: dougefresh/ci/.github/actions/rust-init@release-bin
+        uses: dougefresh/ci/.github/actions/rust-init@main
         with:
           ref: ${{ needs.release.outputs.tag }}
       - name: Build
@@ -222,7 +222,7 @@ jobs:
       contents: write
     steps:
       - name: Init
-        uses: dougefresh/ci/.github/actions/rust-init@release-bin
+        uses: dougefresh/ci/.github/actions/rust-init@main
         with:
           ref: ${{ needs.release.outputs.tag }}
       - name: Install cargo-deb
