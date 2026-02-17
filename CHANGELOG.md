@@ -1,5 +1,11 @@
 # @dougefresh/ci
 
+## 0.1.30
+
+### Patch Changes
+
+- 8f8c88d: releas bin
+
 ## 0.1.29
 
 ### Patch Changes
