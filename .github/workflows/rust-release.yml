@@ -86,7 +86,7 @@ jobs:
 
   linux-arm64:
     name: Linux ARM64
-    if: ${{ needs.release.outputs.bin }}
+    if:  ${{ needs.release.outputs.bin && fromJSON(needs.config.outputs.config).release.linux.arm64 }}
     needs: [config, release]
     runs-on: ${{ vars.RUNNER_ARM64 }}
     env:
@@ -116,7 +116,7 @@ jobs:
 
   linux-amd64:
     name: Linux AMD64
-    if: ${{ needs.release.output.bin }}
+    if:  ${{ needs.release.outputs.bin && fromJSON(needs.config.outputs.config).release.linux.amd64 }}
     needs: [config, release]
     runs-on: ${{ vars.RUNNER_AMD64 }}
     env:
@@ -146,7 +146,7 @@ jobs:
 
   mac-arm:
     name: macOS ARM64
-    if: ${{ needs.release.outputs.bin }}
+    if:  ${{ needs.release.outputs.bin && fromJSON(needs.config.outputs.config).release.mac }}
     needs: [config, release]
     runs-on: macos-latest
     permissions:

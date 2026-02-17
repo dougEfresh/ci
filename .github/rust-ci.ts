@@ -10,13 +10,13 @@ export default function () {
       publish: false,
       debian: false,
       bin: {
-        name: 'blah',
+        name: 'dummy',
         linux: {
           arm64: true,
-          amd64: false,
+          amd64: true,
         },
         win: false,
-        mac: false,
+        mac: true,
       },
     })
     .disableSanitizers()
