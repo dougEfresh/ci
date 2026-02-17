@@ -13,8 +13,18 @@ import {
   DEFAULT_SEMVER,
   osToTarget,
 } from './defaults';
-import { type AiJob, type Clippy, type Global, Os, type PageJobs, type Release, type RustJobs } from './types';
+import {
+  type AiJob,
+  type Clippy,
+  type Coverage,
+  type Global,
+  Os,
+  type PageJobs,
+  type Release,
+  type RustJobs,
+} from './types';
 
+export * from './defaults';
 export * from './types';
 
 export const JobDefaults: RustJobs = {
@@ -133,6 +143,17 @@ export class RustWorkflow {
     return this;
   }
 
+  coverage(opts?: Partial<Coverage>) {
+    if (opts?.run) this.jobs.coverage.run = opts.run;
+    if (opts?.if !== undefined) this.jobs.coverage.if = opts.if;
+    if (opts?.continueOnError !== undefined) this.jobs.coverage.continueOnError = opts.continueOnError;
+    if (opts?.matrix) {
+      if (opts.matrix.toolchains) this.jobs.coverage.matrix.toolchains = opts.matrix.toolchains;
+      if (opts.matrix.features) this.jobs.coverage.matrix.features = opts.matrix.features;
+      if (opts.matrix.os) this.jobs.coverage.matrix.os = opts.matrix.os;
+    }
+    return this;
+  }
   clippy(opts?: Partial<Clippy>) {
     if (opts?.flags) this.jobs.clippy.flags = opts.flags;
     if (opts?.run) this.jobs.clippy.run = opts.run;
