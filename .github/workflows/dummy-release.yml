@@ -2,6 +2,7 @@ name: release
 permissions:
   contents: write
   checks: write
+  id-token: write
 on:
   workflow_dispatch:
     inputs:
@@ -18,12 +19,8 @@ on:
           - alpha
           - major
           - release
-      runner:
-        description: 'Runner to use'
-        required: false
 jobs:
   releaser:
-    if: false
     name: release
     uses: ./.github/workflows/rust-release.yml
     secrets: inherit

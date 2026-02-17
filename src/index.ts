@@ -11,19 +11,8 @@ import {
   DEFAULT_PAGES,
   DEFAULT_SANITIZERS,
   DEFAULT_SEMVER,
-  osToTarget,
 } from './defaults';
-import {
-  type AiJob,
-  type Clippy,
-  type Coverage,
-  type Extra,
-  type Global,
-  Os,
-  type PageJobs,
-  type Release,
-  type RustJobs,
-} from './types';
+import type { AiJob, Clippy, Coverage, Extra, Global, PageJobs, Release, RustJobs } from './types';
 
 export * from './defaults';
 export * from './types';
@@ -64,15 +53,18 @@ export class RustWorkflow {
 
     this.global = { packages: {} };
     this.release = {
-      publish: true,
-      bin: false,
+      publish: false,
+      bin: {
+        name: '',
+        linux: {
+          arm64: false,
+          amd64: false,
+        },
+        win: false,
+        mac: false,
+      },
       debian: false,
       profile: 'release',
-      os: [Os.LINUX_AMD64],
-      homebrew: {
-        if: false,
-        repo: '',
-      },
     };
     this.ai = DEFAULT_AI;
     this.pages = DEFAULT_PAGES;
@@ -200,21 +192,10 @@ export class RustWorkflow {
   }
 
   build() {
-    const target = this.release.os.map((a) => osToTarget(a));
     return {
       ai: this.ai,
       pages: this.pages,
-      release: {
-        bin: this.release.bin,
-        publish: this.release.publish,
-        debian: this.release.debian,
-        profile: this.release.profile,
-        matrix: {
-          os: this.release.os,
-          target,
-        },
-        homebrew: this.release.homebrew,
-      },
+      release: this.release,
       global: this.global,
       jobs: this.jobs,
     };
