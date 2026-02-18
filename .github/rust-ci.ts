@@ -9,6 +9,11 @@ export default function () {
       profile: 'release',
       publish: false,
       debian: false,
+      assets: [
+        { glob: 'docs/**', archiveName: 'docs.tar.gz' },
+        { glob: './.github/workflows/**', archiveName: 'workflows.tar.gz' },
+        { glob: 'devnull/**', archiveName: 'devnull.tar.gz' },
+      ],
       bin: {
         name: 'dummy',
         linux: {

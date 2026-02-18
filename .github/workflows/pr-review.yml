@@ -27,7 +27,7 @@ jobs:
           fi
       - name: config
         id: config
-        uses: dougefresh/ci/.github/actions/rust-config@main
+        uses: dougefresh/ci/.github/actions/rust-config@custom-assets
         with:
           arm64: ${{ vars.RUNNER_ARM64 }}
           amd64: ${{ vars.RUNNER_AMD64 }}
@@ -43,14 +43,14 @@ jobs:
     runs-on: ${{ vars.RUNNER }}
     steps:
       - name: checkout
-        uses: dougefresh/ci/.github/actions/rust-init@main
+        uses: dougefresh/ci/.github/actions/rust-init@custom-assets
         with:
           packages: ${{ toJSON(fromJSON(needs.config.outputs.config).global.packages) }}
       - uses: ubicloud/cache@v4
         with:
           path: ./codecov
           key: codecov-${{ vars.RUNNER }}
-      - name: codecov cli
+      - name: ai tools
         shell: bash
         run: |
           if [ ! -f ./codecov ]; then
@@ -58,6 +58,16 @@ jobs:
           fi
           chmod +x ./codecov
           sudo cp -v  ./codecov /usr/local/bin
+          echo "REPO: ${{ github.repository }}"
+      - name: setup bun
+        uses: oven-sh/setup-bun@v2
+        if: github.repository == 'dougefresh/ci'
+      - name: local-setup
+        if: github.repository == 'dougefresh/ci'
+        shell: bash
+        run: |
+          bun install
+          bun install @typescript/native-preview
       - name: jobtaker
         if: ${{ fromJSON(needs.config.outputs.config).ai.enabled }}
         uses: anthropics/claude-code-action@main

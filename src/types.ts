@@ -101,6 +101,11 @@ export interface RustJobs {
   extra: Extra;
 }
 
+export interface ReleaseAsset {
+  glob: string;
+  archiveName: string;
+}
+
 export interface Release {
   publish: boolean;
   debian: boolean;
@@ -114,4 +119,5 @@ export interface Release {
     win: boolean;
     mac: boolean;
   };
+  assets?: ReleaseAsset[];
 }
