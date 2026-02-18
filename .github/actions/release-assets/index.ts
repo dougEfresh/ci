@@ -1,3 +1,4 @@
+import { basename } from 'node:path';
 import { Glob } from 'bun';
 
 interface ReleaseAsset {
@@ -18,6 +19,11 @@ await Bun.write(`${outputDir}/.gitkeep`, '');
 for (const asset of assets) {
   if (!asset.archiveName.endsWith('.tar.gz')) {
     console.error(`::error::archiveName must end with .tar.gz: ${asset.archiveName}`);
+    process.exit(1);
+  }
+  const safeName = basename(asset.archiveName);
+  if (safeName !== asset.archiveName) {
+    console.error(`::error::archiveName contains path separators: ${asset.archiveName}`);
     process.exit(1);
   }
 

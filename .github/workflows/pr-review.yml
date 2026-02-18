@@ -58,12 +58,12 @@ jobs:
           fi
           chmod +x ./codecov
           sudo cp -v  ./codecov /usr/local/bin
-          echo "REPO: ${{ github.repo }}"
+          echo "REPO: ${{ github.repository }}"
       - name: setup bun
         uses: oven-sh/setup-bun@v2
-        # if: github.repo == 'dougefresh/ci' ## CLAUDE, i am testing
+        if: github.repository == 'dougefresh/ci'
       - name: local-setup
-        # if: github.repo == 'dougefresh/ci' ## CLAUDE, i am testing
+        if: github.repository == 'dougefresh/ci'
         shell: bash
         run: |
           bun install

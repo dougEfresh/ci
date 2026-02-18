@@ -12,7 +12,7 @@ import {
   DEFAULT_SANITIZERS,
   DEFAULT_SEMVER,
 } from './defaults';
-import type { AiJob, Clippy, Coverage, Extra, Global, PageJobs, Release, ReleaseAsset, RustJobs } from './types';
+import type { AiJob, Clippy, Coverage, Extra, Global, PageJobs, Release, RustJobs } from './types';
 
 export * from './defaults';
 export * from './types';
@@ -108,7 +108,7 @@ export class RustWorkflow {
   }
 
   disableCoverage() {
-    this.jobs.coverage.if = true;
+    this.jobs.coverage.if = false;
     return this;
   }
 
@@ -183,16 +183,6 @@ export class RustWorkflow {
 
   configureAi(config: AiJob) {
     this.ai = config;
-    return this;
-  }
-
-  assets(assets: ReleaseAsset[]) {
-    this.release.assets = assets;
-    return this;
-  }
-
-  configureRelease(config: Release) {
-    this.release = config;
     return this;
   }
 
