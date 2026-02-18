@@ -17,7 +17,7 @@ await Bun.write(`${outputDir}/.gitkeep`, '');
 
 for (const asset of assets) {
   if (!asset.archiveName.endsWith('.tar.gz')) {
-    console.error(`archiveName must end with .tar.gz: ${asset.archiveName}`);
+    console.error(`::error::archiveName must end with .tar.gz: ${asset.archiveName}`);
     process.exit(1);
   }
 
@@ -28,8 +28,8 @@ for (const asset of assets) {
   }
 
   if (!Object.keys(files).length) {
-    console.error(`No files matched glob: ${asset.glob}`);
-    process.exit(1);
+    console.warn(`::warning::No files matched glob: ${asset.glob}`);
+    continue;
   }
 
   const archive = new Bun.Archive(files, { compress: 'gzip' });

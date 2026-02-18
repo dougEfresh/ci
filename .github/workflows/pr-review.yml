@@ -50,7 +50,7 @@ jobs:
         with:
           path: ./codecov
           key: codecov-${{ vars.RUNNER }}
-      - name: codecov cli
+      - name: ai tools
         shell: bash
         run: |
           if [ ! -f ./codecov ]; then
@@ -58,6 +58,16 @@ jobs:
           fi
           chmod +x ./codecov
           sudo cp -v  ./codecov /usr/local/bin
+          echo "REPO: ${{ github.repo }}"
+      - name: setup bun
+        uses: oven-sh/setup-bun@v2
+        # if: github.repo == 'dougefresh/ci' ## CLAUDE, i am testing
+      - name: local-setup
+        # if: github.repo == 'dougefresh/ci' ## CLAUDE, i am testing
+        shell: bash
+        run: |
+          bun install
+          bun install @typescript/native-preview
       - name: jobtaker
         if: ${{ fromJSON(needs.config.outputs.config).ai.enabled }}
         uses: anthropics/claude-code-action@main
