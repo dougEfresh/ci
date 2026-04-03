@@ -49,6 +49,7 @@ export const DEFAULT_AI: AiJob = {
         'Bash(jq *)',
         'Bash(git *)',
         'Bash(gh *)',
+        'WebFetch(domain:*)',
       ],
     },
     respectGitignore: true,
