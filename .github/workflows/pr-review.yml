@@ -67,7 +67,7 @@ jobs:
         shell: bash
         run: |
           bun install
-          bun install @typescript/native-preview
+          echo "$PWD/node_modules/.bin" >> $GITHUB_PATH
       - name: jobtaker
         if: ${{ fromJSON(needs.config.outputs.config).ai.enabled }}
         uses: anthropics/claude-code-action@main
