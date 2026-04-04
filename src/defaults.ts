@@ -49,7 +49,7 @@ export const DEFAULT_AI: AiJob = {
         'Bash(jq *)',
         'Bash(git *)',
         'Bash(gh *)',
-        'Bash(curl *)',
+        'Bash(curl -X GET *)',
       ],
     },
     respectGitignore: true,
