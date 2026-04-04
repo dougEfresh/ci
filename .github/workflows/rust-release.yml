@@ -25,7 +25,7 @@ jobs:
     steps:
       - name: config
         id: config
-        uses: dougefresh/ci/.github/actions/rust-config@webfetch
+        uses: dougefresh/ci/.github/actions/rust-config@main
         with:
           arm64: ${{ vars.RUNNER_ARM64 }}
           amd64: ${{ vars.RUNNER_AMD64 }}
@@ -41,7 +41,7 @@ jobs:
       contents: write
     steps:
       - name: Init
-        uses: dougefresh/ci/.github/actions/rust-init@webfetch
+        uses: dougefresh/ci/.github/actions/rust-init@main
       - name: Install cargo-release
         uses: taiki-e/cache-cargo-install-action@v3
         with:
@@ -92,7 +92,7 @@ jobs:
     runs-on: ${{ vars.RUNNER_ARM64 }}
     steps:
       - name: Init
-        uses: dougefresh/ci/.github/actions/rust-init@webfetch
+        uses: dougefresh/ci/.github/actions/rust-init@main
         with:
           ref: ${{ needs.release.outputs.tag }}
       - name: Build
@@ -113,7 +113,7 @@ jobs:
     runs-on: ${{ vars.RUNNER_AMD64 }}
     steps:
       - name: Init
-        uses: dougefresh/ci/.github/actions/rust-init@webfetch
+        uses: dougefresh/ci/.github/actions/rust-init@main
         with:
           ref: ${{ needs.release.outputs.tag }}
       - name: Build
@@ -134,7 +134,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Init
-        uses: dougefresh/ci/.github/actions/rust-init@webfetch
+        uses: dougefresh/ci/.github/actions/rust-init@main
         with:
           ref: ${{ needs.release.outputs.tag }}
       - name: Build
@@ -155,7 +155,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Init
-        uses: dougefresh/ci/.github/actions/rust-init@webfetch
+        uses: dougefresh/ci/.github/actions/rust-init@main
         with:
           ref: ${{ needs.release.outputs.tag }}
       - name: Build
@@ -186,7 +186,7 @@ jobs:
     runs-on: ${{ matrix.runner }}
     steps:
       - name: Init
-        uses: dougefresh/ci/.github/actions/rust-init@webfetch
+        uses: dougefresh/ci/.github/actions/rust-init@main
         with:
           ref: ${{ needs.release.outputs.tag }}
       - name: Install cargo-deb
@@ -212,7 +212,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           ref: ${{ needs.release.outputs.tag }}
-      - uses: dougefresh/ci/.github/actions/release-assets@webfetch
+      - uses: dougefresh/ci/.github/actions/release-assets@main
         with:
           assets: ${{ toJSON(fromJSON(needs.config.outputs.config).release.assets) }}
       - uses: actions/upload-artifact@v7

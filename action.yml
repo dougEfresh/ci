@@ -30,8 +30,6 @@ runs:
       shell: bash
       run: |
         echo "/home/runner/.bun/bin" >> $GITHUB_PATH
-    - name: setup bun
-      uses: oven-sh/setup-bun@v2
     - name: install
       shell: bash
       run: |
